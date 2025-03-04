@@ -17,7 +17,7 @@ class AdminDashboard extends Component
 
     public function mount()
     {
-        if (!Auth::user() || Auth::user()->role->name !== 'admin') {
+        if (!Auth::user()) {
             abort(403, 'Unauthorized access');
         }
     }
@@ -31,9 +31,9 @@ class AdminDashboard extends Component
 
         if(Auth::user()->role->name == 'admin'){
             return view('livewire.admin.admin-dashboard');
-        }
-
-        if(Auth::user()->role->name == 'student'){
+        }elseif( Auth::user()->role->name == 'instructor'){
+            return view('livewire.admin.admin-dashboard');
+        }elseif(Auth::user()->role->name == 'student'){
             return view('livewire.quiz');
         }
 
@@ -68,5 +68,10 @@ class AdminDashboard extends Component
 
     public function logOut(){
         Auth::logout();
+        return redirect('/login');
+    }
+
+    public function manageUsers(){
+        $this->redirect('/manage-users');
     }
 }

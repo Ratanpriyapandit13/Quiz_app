@@ -12,7 +12,6 @@ class QuizAttempts extends Component
 
     public function mount()
     {
-        // Fetch all quizzes attempted by users along with their submitted answers
         $this->attemptedQuizzes = SubmittedQuiz::with(['user', 'quiz'])
             ->get();
     }
@@ -24,5 +23,24 @@ class QuizAttempts extends Component
 
     public function backToAdmin(){
         $this->redirect('/admin-dashboard');
+    }
+
+    public function deleteSubmittedQuiz($submittedQuizId)
+    {
+        $submittedQuiz = SubmittedQuiz::with('submittedAnswers')->find($submittedQuizId);
+
+        if (!$submittedQuiz) {
+            session()->flash('error', 'Submitted Quiz not found!');
+            return;
+        }
+
+        $submittedQuiz->submittedAnswers()->delete();
+
+        $submittedQuiz->delete();
+
+        session()->flash('success', 'Submitted Quiz deleted successfully!');
+
+        $this->attemptedQuizzes = SubmittedQuiz::with(['user', 'quiz'])
+            ->get();
     }
 }

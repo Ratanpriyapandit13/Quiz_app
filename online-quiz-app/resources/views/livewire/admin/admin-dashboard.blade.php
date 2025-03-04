@@ -7,8 +7,17 @@
 
     <p>Welcome, <strong>{{ auth()->user()->name }}</strong> ({{ auth()->user()->role->name }})</p>
 
+
+    <!-- Button to Manage users -->
+    @if(auth()->user()->role->name == 'admin')
+        <button wire:click="manageUsers" class="mt-4 bg-blue-600 px-4 py-2 rounded">
+            Manage Users
+        </button>
+    @endif
+
+
     <!-- Button to Toggle Question Form -->
-    <button wire:click="toggleQuestionForm" class="mt-4 bg-blue-600 px-4 py-2 rounded ms-2">
+    <button wire:click="toggleQuestionForm" class="mt-4 bg-blue-600 px-4 py-2 rounded">
         {{ $showQuestionForm ? 'Hide Question' : 'Create Question' }}
     </button>
 

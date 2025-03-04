@@ -8,6 +8,8 @@
                 <th class="border border-gray-300 px-4 py-2">User</th>
                 <th class="border border-gray-300 px-4 py-2">Quiz</th>
                 <th class="border border-gray-300 px-4 py-2">Submitted Answers</th>
+                <th class="border border-gray-300 px-4 py-2">Score</th>
+                <th class="border border-gray-300 px-4 py-2">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +27,8 @@
                             @endforeach
                         </ul>
                     </td>
+                    <td class="border border-gray-300 px-4 py-2">{{ $attempt->score }}</td>
+                    <td><button wire:click="deleteSubmittedQuiz({{ $attempt->id }})" wire:confirm="Are you sure you want to delete this post?" class="btn btn-danger delete-header m-1"  title="Delete"><i class="glyphicon glyphicon-trash" small>Delete</i></button></td>
                 </tr>
             @endforeach
         </tbody>

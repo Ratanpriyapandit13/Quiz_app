@@ -25,7 +25,13 @@ class Login extends Component
 
         if(Auth::attempt(array('email' => $this->email, 'password' => $this->password))){
 
-            if(Auth::user()->role->name == 'admin'){
+            if(Auth::user()->role->name == 'admin' ){
+                session()->flash('message', "You are Login successful.");
+                return redirect("/admin-dashboard");
+            }elseif(Auth::user()->role->name == 'student'){
+                session()->flash('message', "You are Login successful.");
+                return redirect("/quiz");
+            }elseif(Auth::user()->role->name == 'instructor'){
                 session()->flash('message', "You are Login successful.");
                 return redirect("/admin-dashboard");
             }
